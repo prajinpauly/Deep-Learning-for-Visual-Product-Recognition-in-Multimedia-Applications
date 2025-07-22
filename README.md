@@ -1,140 +1,120 @@
-# 🤖 Deep Learning Project: Visual Product Recognition in Multimedia Applications
+# Deep Learning for Visual Product Recognition in Multimedia Applications
 
-## 📌 Project Description
+## Overview
 
-This repository contains deep learning models and supporting documentation for solving **visual product recognition** challenges using modern computer vision techniques in e-commerce and retail analytics. The project harnesses convolutional neural networks (CNNs), ResNet50, Vision Transformers (ViT), and hybrid models, designed and implemented with **PyTorch**.
+This project focuses on building intelligent systems that can automatically identify and classify products in images using deep learning techniques. The models were trained and evaluated on a large and diverse product image dataset, tackling real-world challenges often seen in e-commerce, retail analytics, and warehouse management.
 
-The experiments focus on real-world issues such as data imbalance, low-image quality, and massive class diversity — leveraging powerful GPU-based systems to perform large-scale training on the **Products-10K** dataset (200K+ images).
-
----
-
-## 🎯 Objective
-
-To design and implement deep learning architectures that can accurately classify products in images under various real-world challenges (e.g. lighting, occlusion, orientation). Models were trained to distinguish visual patterns in customer-review images and enable scalable, automated product identification.
+By implementing and comparing multiple architectures — including CNNs, ResNet50, and Vision Transformers — the goal was to achieve accurate recognition despite issues like poor image quality, class imbalance, and large-scale data volume.
 
 ---
 
-## 📌 Significance in Multimedia Processing
+## Objectives
 
-- **E-Commerce** ➜ Auto-tagging items from user-uploaded images for improved product matching and recommendations.
-- **Inventory Optimization** ➜ Surveillance and shelf-tracking systems for retail stores.
-- **Fake Product Prevention** ➜ Recognizing counterfeit products during quality control procedures.
-- **Warehouse Management** ➜ Real-time categorization and tracking to enhance logistics efficiency.
-
----
-
-## 📂 Dataset: Products-10K
-
-- ✅ 141,931 training images  
-- ✅ 55,375 testing images  
-- ✅ ~9,690 classes  
-- ✅ ~18GB dataset size  
-- Source: Publicly available Products-10K image classification dataset
-
-### 📉 Challenges:
-- Skewed class distribution (some classes had only 2 images)
-- Low-quality user submissions (blur, poor lighting, occlusions)
-- Massive class count and metadata complexity
-- High compute demand on local GPUs
+- Develop deep learning models capable of identifying and classifying products based on customer-submitted images.
+- Compare different architectures to determine which performs best under realistic data conditions.
+- Apply techniques to improve generalization, reduce overfitting, and handle class imbalance.
 
 ---
 
-## 🧪 Data Preprocessing Techniques
+## Real-World Relevance
 
-- **Image Resizing**: Standardized to 224×224 input size.
-- **Normalization**: Scaling pixel values between 0–1.
-- **Data Augmentation**: Flipping, color jitter, rotation to improve generalization.
-- **Oversampling / Undersampling**: Balanced rare classes.
-- **Weighted Loss**: Prioritized underrepresented classes using class-weighted cross-entropy.
-- **Train/Validation Splits**: 80:20 ratio for training and evaluation.
+Product recognition plays a critical role in modern multimedia applications:
 
----
-
-## 🏗️ Model Design & Architecture
-
-### 🔶 Model 1: CNN with ResNet50 (Transfer Learning)
-- ResNet50 used as a feature extractor
-- Dropout (p=0.5) to prevent overfitting
-- Early stopping to avoid unnecessary epochs 
-- Data augmentation incorporated
-
-### 🔶 Model 2: Vision Transformer (ViT)
-- 16×16 patch embedding
-- Classification head customized for 9.6k classes
-- Specialized for learning global feature representations
-- Applied attention to obtain contextual image understanding
-
-### 🔶 Model 3: CNN with Data Augmentation + Oversampling
-- 3-layer custom CNN with filter sizes 12, 20, 32
-- Batch normalization, dropout regularization
-- Strong performance and generalization despite data noise
+- **E-commerce**: Automate the tagging and categorization process for faster and more accurate listings.
+- **Retail Analytics**: Monitor shelf stock and optimize restocking without manual input.
+- **Inventory Management**: Recognize and track products in warehouses to improve operational efficiency.
+- **Counterfeit Detection**: Identify fake or low-quality items based on visual cues.
 
 ---
 
-## 🚀 Future Models
+## Dataset: Products-10K
 
-### 📈 CNN + LSTM  
-Captures spatial and sequential (temporal) patterns from image series or time-dependent data.
+A large-scale open-source dataset containing:
 
-### 📌 Attention-based CNN  
-Integrates spatial attention modules to focus on important regions of an image, improving classification for complex datasets.
+- **~142,000 training images**
+- **~55,000 test images**
+- **Over 9,600 product categories**
+- **Total size**: ~18GB
 
----
+### Key Challenges
 
-## 🏁 Model Training & Performance
-
-| 📍Model | Training Accuracy | Validation Accuracy | Test Accuracy |
-|--------|-------------------|---------------------|----------------|
-| CNN (ResNet50) | 5.02% | 6.54% | 4.99% |
-| Vision Transformer | 9.26% | 7.47% | 4.35% |
-| Custom CNN | **86.00%** | **30.50%** | **29.60%** |
-
-### ✅ Key Observations:
-
-- Lower performance in Model 1 and Model 2 → Bottlenecks due to class imbalance, low image quality.
-- Model 3 showed **best learning and generalization capacity** thanks to data balancing and architecture tuning.
+- **Class Imbalance**: Some categories had only 2–3 images, while others had 80+.
+- **Image Quality**: Varying clarity, lighting, backgrounds, and occlusions impacted model learning.
+- **High Computation Needs**: Training required GPU acceleration due to dataset volume and deep model complexity.
 
 ---
 
-## 📊 Comparative Insights
+## Preprocessing Workflow
 
-- Model 3 clearly outperformed others in accuracy and training stability.
-- Training deeper models (e.g., ViT) required more tuning and compute, often underperforming with small metrics.
-- Dataset quality and class imbalance were the biggest hurdles impacting overall model success.
+To ensure quality model training, the following steps were implemented:
 
----
-
-## 🔍 Insights Gained
-
-- **Data Quality Directly Impacts Accuracy**: Poor lighting, occlusion, and blur were major prediction hurdles.
-- **Balanced Datasets Matter**: Handling class imbalance dramatically helped generalization in Model 3.
-- **GPU Acceleration Was Critical**: Using CUDA on NVIDIA helped reduce training time and scale up experiments.
-- **Model 3 = Best Performer**: Due to its simplicity, powerful augmentations, and class balancing strategy.
+- **Image Resizing**: Standardized image dimensions to 224×224 pixels.
+- **Normalization**: Scaled pixel values between 0–1 to stabilize training.
+- **Data Augmentation**: Introduced flipping, rotation, and color jitter to enhance diversity.
+- **Imbalance Handling**:
+  - Oversampling rare classes
+  - Using class-weighted loss functions for fair learning
+- **Train/Validation Split**: 80:20 ratio to balance training performance with reliable evaluation.
 
 ---
 
-## ✅ Conclusion
+## Model Architectures
 
-This project explored and compared deep learning models for solving **Visual Product Recognition** from scratch. In particular:
+### 1. CNN with ResNet50 (Transfer Learning)
 
-- It demonstrated how CNNs, Transformers, and hybrid models behave under real-world multimedia challenges.
-- It highlighted the **need for balanced data**, compute infrastructure, and proper model selection.
-- The custom CNN with data augmentation and oversampling significantly outperformed other approaches in the task.
+- Made use of a pre-trained ResNet50 model as a strong feature extractor.
+- Added custom classification layers for the product dataset.
+- Integrated dropout and early stopping to reduce overfitting.
+- Applied weighted cross-entropy loss to handle class imbalance.
 
-These findings are impactful for industries requiring scalable product recognition systems, such as e-commerce, logistics, and retail analytics. The project opened up many future directions for hybrid architectures and efficient model deployment.
+### 2. Vision Transformer (ViT)
+
+- Processed image patches using self-attention instead of convolutions.
+- Captured global image context more effectively for complex classifications.
+- Customized classification head suited for the large number of categories.
+
+### 3. Custom CNN with Augmentation & Oversampling
+
+- Designed a lightweight 3-layer CNN from scratch with filters 12, 20, and 32.
+- Applied batch normalization and dropout for performance tuning.
+- Achieved the best overall results on training and test data.
 
 ---
 
-## 📚 References
+## Evaluation Results
 
-- Mieczysław Pawłowski. *Machine Learning-Based Product Classification for eCommerce*, May 2021.
-- Fei Sun et al. *Product Classification with the Motivation of Target Consumers by Deep Learning*, June 2022.
-- Leonidas Akritidis et al. *Effective Products Categorization with Importance Scores*, November 2018.
+| Architecture           | Training Accuracy | Validation Accuracy | Test Accuracy |
+|------------------------|-------------------|---------------------|----------------|
+| CNN + ResNet50         | 5.02%             | 6.54%               | 4.99%          |
+| Vision Transformer     | 9.26%             | 7.47%               | 4.35%          |
+| Custom CNN             | **86.00%**        | **30.50%**          | **29.60%**     |
+
+### Observations
+
+- The **custom CNN** performed significantly better in both training and evaluation.
+- ResNet50 and ViT architectures struggled with the high class imbalance and noisy data.
+- Data augmentation and oversampling were critical for boosting performance on smaller classes.
 
 ---
 
-## 👤 Author
+## Key Insights
+
+- Image quality and class balance play a major role in real-world model performance.
+- Smaller, well-optimized models can outshine complex architectures when data is limited or noisy.
+- CUDA-enabled GPUs and careful memory management were essential due to the dataset's scale.
+
+---
+
+## Future Work
+
+- **CNN + LSTM**: Integrate temporal modeling for video or sequence-based recognition tasks.
+- **Attention-based CNNs**: Use attention layers to focus on the most influential image regions.
+- **Model Deployment**: Explore deploying the best-performing model as an API or web tool.
+
+---
+
+## Author
 
 **Prajin Paul**  
-📧 [paulprajin2015@gmail.com](mailto:paulprajin2015@gmail.com)  
-🔗 [LinkedIn Profile](https://www.linkedin.com/in/prajin-paul-b64415247/)
+📧 Email: [paulprajin2015@gmail.com](mailto:paulprajin2015@gmail.com)  
+🔗 LinkedIn: [https://www.linkedin.com/in/prajin-paul-b64415247](https://www.linkedin.com/in/prajin-paul-b64415247)
