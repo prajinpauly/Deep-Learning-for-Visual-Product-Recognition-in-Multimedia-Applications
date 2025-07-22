@@ -1,120 +1,108 @@
-# Visual Product Recognition Using AI
+# Visual Product Recognition for E-commerce Catalog Automation
 
 ## Overview
 
-This project focuses on building intelligent systems that can automatically identify and classify products in images using deep learning techniques. The models were trained and evaluated on a large and diverse product image dataset, tackling real-world challenges often seen in e-commerce, retail analytics, and warehouse management.
+This project focuses on building intelligent visual recognition systems to **automate product identification and categorization in e-commerce platforms**. Leveraging deep learning, the models are trained to accurately classify customer-submitted product images, addressing real-world challenges such as large-scale, diverse, and often noisy e-commerce data.
 
-By implementing and comparing multiple architectures — including CNNs, ResNet50, and Vision Transformers — the goal was to achieve accurate recognition despite issues like poor image quality, class imbalance, and large-scale data volume.
+By implementing and comparing multiple architectures—including CNNs, ResNet50, and Vision Transformers—the project aims to streamline catalog management, improve listing accuracy, and reduce manual effort in online marketplaces.
 
 ---
 
 ## Objectives
 
-- Develop deep learning models capable of identifying and classifying products based on customer-submitted images.
-- Compare different architectures to determine which performs best under realistic data conditions.
-- Apply techniques to improve generalization, reduce overfitting, and handle class imbalance.
+- **Automate Product Tagging:** Reliably identify and classify products from user-uploaded images for faster, more accurate cataloging.
+- **Architecture Benchmarking:** Compare deep learning approaches to determine the most effective solution for e-commerce image data.
+- **Robustness to Real-World Data:** Apply techniques to handle class imbalance, poor image quality, and diverse backgrounds typical in customer photos.
 
 ---
 
-## Real-World Relevance
+## E-commerce Relevance
 
-Product recognition plays a critical role in modern multimedia applications:
+Product recognition is a cornerstone of modern e-commerce operations:
 
-- **E-commerce**: Automate the tagging and categorization process for faster and more accurate listings.
-- **Retail Analytics**: Monitor shelf stock and optimize restocking without manual input.
-- **Inventory Management**: Recognize and track products in warehouses to improve operational efficiency.
-- **Counterfeit Detection**: Identify fake or low-quality items based on visual cues.
+- **Automated Cataloging:** Instantly categorize new product listings, reducing manual data entry and human error.
+- **Duplicate & Counterfeit Detection:** Identify duplicate or fake listings by visually matching products.
+- **Personalized Search & Recommendations:** Enhance search accuracy and product discovery by leveraging visual similarity.
+- **Quality Control:** Flag low-quality or miscategorized images before they go live.
 
 ---
 
 ## Dataset: Products-10K
 
-A large-scale open-source dataset containing:
+- **Source:** Open-source, e-commerce-focused product image dataset.
+- **Scale:** ~142,000 training images, ~55,000 test images, 9,600+ product categories.
+- **Challenges:** Highly imbalanced classes, variable image quality, diverse backgrounds—mirroring real e-commerce submissions.
 
-- **~142,000 training images**
-- **~55,000 test images**
-- **Over 9,600 product categories**
-- **Total size**: ~18GB
+---
 
-### Key Challenges
+## Key Challenges
 
-- **Class Imbalance**: Some categories had only 2–3 images, while others had 80+.
-- **Image Quality**: Varying clarity, lighting, backgrounds, and occlusions impacted model learning.
-- **High Computation Needs**: Training required GPU acceleration due to dataset volume and deep model complexity.
+- **Class Imbalance:** Some product types are rare (e.g., niche accessories), while others are common (e.g., smartphones).
+- **Image Quality:** User-uploaded images vary in lighting, focus, and background clutter.
+- **Scalability:** Need for fast, scalable models to handle millions of listings.
 
 ---
 
 ## Preprocessing Workflow
 
-To ensure quality model training, the following steps were implemented:
-
-- **Image Resizing**: Standardized image dimensions to 224×224 pixels.
-- **Normalization**: Scaled pixel values between 0–1 to stabilize training.
-- **Data Augmentation**: Introduced flipping, rotation, and color jitter to enhance diversity.
-- **Imbalance Handling**:
-  - Oversampling rare classes
-  - Using class-weighted loss functions for fair learning
-- **Train/Validation Split**: 80:20 ratio to balance training performance with reliable evaluation.
+- **Image Resizing:** Standardized to 224×224 pixels for model compatibility.
+- **Normalization:** Pixel values scaled to [0, 1] for stable training.
+- **Data Augmentation:** Flipping, rotation, and color jitter to simulate real-world listing diversity.
+- **Imbalance Handling:** Oversampling rare classes and using class-weighted loss functions.
+- **Train/Validation Split:** 80:20 for robust evaluation.
 
 ---
 
 ## Model Architectures
 
 ### 1. CNN with ResNet50 (Transfer Learning)
-
-- Made use of a pre-trained ResNet50 model as a strong feature extractor.
-- Added custom classification layers for the product dataset.
-- Integrated dropout and early stopping to reduce overfitting.
-- Applied weighted cross-entropy loss to handle class imbalance.
+- Pre-trained on ImageNet, fine-tuned for e-commerce product categories.
+- Custom classification layers, dropout, and class-weighted loss for imbalance.
 
 ### 2. Vision Transformer (ViT)
+- Processes image patches with self-attention, capturing global context for complex product images.
 
-- Processed image patches using self-attention instead of convolutions.
-- Captured global image context more effectively for complex classifications.
-- Customized classification head suited for the large number of categories.
-
-### 3. Custom CNN with Augmentation & Oversampling
-
-- Designed a lightweight 3-layer CNN from scratch with filters 12, 20, and 32.
-- Applied batch normalization and dropout for performance tuning.
-- Achieved the best overall results on training and test data.
+### 3. Custom Lightweight CNN
+- 3-layer architecture optimized for e-commerce data.
+- Batch normalization, dropout, and aggressive augmentation for generalization.
 
 ---
 
 ## Evaluation Results
 
-| Architecture           | Training Accuracy | Validation Accuracy | Test Accuracy |
-|------------------------|-------------------|---------------------|----------------|
-| CNN + ResNet50         | 5.02%             | 6.54%               | 4.99%          |
-| Vision Transformer     | 9.26%             | 7.47%               | 4.35%          |
-| Custom CNN             | **86.00%**        | **30.50%**          | **29.60%**     |
+| Architecture      | Training Accuracy | Validation Accuracy | Test Accuracy |
+|-------------------|------------------|--------------------|--------------|
+| CNN + ResNet50    | 5.02%            | 6.54%              | 4.99%        |
+| Vision Transformer| 9.26%            | 7.47%              | 4.35%        |
+| Custom CNN        | 86.00%           | 30.50%             | 29.60%       |
 
-### Observations
-
-- The **custom CNN** performed significantly better in both training and evaluation.
-- ResNet50 and ViT architectures struggled with the high class imbalance and noisy data.
-- Data augmentation and oversampling were critical for boosting performance on smaller classes.
+**Key Takeaway:**  
+The custom CNN, tailored for e-commerce data, outperformed more complex models, highlighting the importance of domain-specific optimization and data augmentation.
 
 ---
 
-## Key Insights
+## Insights for E-commerce
 
-- Image quality and class balance play a major role in real-world model performance.
-- Smaller, well-optimized models can outshine complex architectures when data is limited or noisy.
-- CUDA-enabled GPUs and careful memory management were essential due to the dataset's scale.
+- **Data Quality is Critical:** User-generated images require robust preprocessing and augmentation.
+- **Class Imbalance Must Be Addressed:** Rare product types need special handling to avoid bias.
+- **Smaller, Efficient Models Work Best:** For noisy, diverse e-commerce data, lightweight models generalize better than large, generic architectures.
 
 ---
 
 ## Future Work
 
-- **CNN + LSTM**: Integrate temporal modeling for video or sequence-based recognition tasks.
-- **Attention-based CNNs**: Use attention layers to focus on the most influential image regions.
-- **Model Deployment**: Explore deploying the best-performing model as an API or web tool.
+- **Sequence Modeling:** Integrate CNN + LSTM for video-based product listings (e.g., 360° views).
+- **Attention Mechanisms:** Use attention layers to focus on key product features (e.g., logos, labels).
+- **API Deployment:** Package the best model as a REST API for integration with e-commerce platforms.
 
 ---
 
 ## Author
 
 **Prajin Paul**  
-📧 Email: [paulprajin2015@gmail.com](mailto:paulprajin2015@gmail.com)  
-🔗 LinkedIn: [https://www.linkedin.com/in/prajin-paul-b64415247](https://www.linkedin.com/in/prajin-paul-b64415247)
+📧 paulprajin2015@gmail.com  
+[LinkedIn](https://www.linkedin.com/in/prajin-paul-b64415247)
+
+---
+
+*Feel free to fork, contribute, or reach out for collaboration!*
