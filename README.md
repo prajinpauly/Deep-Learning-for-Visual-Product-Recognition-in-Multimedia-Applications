@@ -1,4 +1,4 @@
-# Deep Learning for Visual Product Recognition in Multimedia Applications
+# Visual Product Recognition Using AI
 
 ## Overview
 
